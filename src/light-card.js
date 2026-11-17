@@ -310,7 +310,9 @@ class LightCard extends RcCard {
     const color = lcColorOf(lead);
     // The parts of the fixture: the members when the fixture shows several lights, else the light itself.
     const many = members.length && ["cluster", "garland", "tree"].includes(kind);
-    const parts = many ? members.map((m) => ({ on: m.on, color: m.color, level: m.level })) : [{ on, color, level, festive: !!effect && (kind === "tree" || kind === "garland") }];
+    // A tree or a garland that plays an effect, or has no colour of its own (an on/off light, a switch), is multicoloured.
+    const festive = (kind === "tree" || kind === "garland") && (!!effect || (!caps.color && !caps.ct));
+    const parts = many ? members.map((m) => ({ on: m.on, color: m.color, level: m.level })) : [{ on, color, level, festive }];
     const area = h.areas?.[h.entities?.[id || listed[0]]?.area_id ?? dev?.area_id]?.name;
     const offline = st ? rcUnavailable(st) : listed.length ? members.every((m) => m.unavailable) : true;
     return {

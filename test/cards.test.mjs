@@ -183,3 +183,17 @@ test("editors: defaults stay out of the YAML, every field has a label", () => {
     assert.deepEqual(json(out), { type: `custom:${tag}`, ...LAMP });
   }
 });
+
+test("a Christmas tree on a switch: switched by a tap, its bulbs in many colours", () => {
+  const hass = makeHass();
+  hass.states["switch.christmas_tree"] = { entity_id: "switch.christmas_tree", state: "on", attributes: { friendly_name: "Christmas tree" }, last_changed: "" };
+  const card = make("light-card", { entity: "switch.christmas_tree" }, hass);
+  const m = card._items;
+  assert.equal(m.kind, "tree");
+  assert.equal(m.state, "on");
+  assert.equal(m.parts[0].festive, true);
+  assert.match(card.shadowRoot.innerHTML, /role="switch"/);
+  assert.match(card.shadowRoot.innerHTML, /fill="#ff5a5f"/);
+  click(card, ".pw");
+  assert.deepEqual(json(hass.calls.at(-1)), ["homeassistant", "turn_off", { entity_id: "switch.christmas_tree" }]);
+});
