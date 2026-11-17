@@ -153,7 +153,7 @@ entity: light.christmas_tree
 | `scenes` | list | | Scenes recalled from the card |
 | `colors` | list | six colours | Advanced (YAML): favourite colours, as `#rrggbb` or `[r, g, b]` (up to 8) |
 | `illustration` | boolean | `true` | Both: the illustrated header (`false`: the classic header) |
-| `illustration_theme` | string | `auto` | Both: `auto` (night with the sun below the horizon or with the dark theme), `day` or `night` |
+| `illustration_theme` | string | `auto` | Both: `auto` (follows the Home Assistant theme: night with a dark theme, day with a light theme), `day` or `night` |
 | `show_colors` | boolean | `true` | Colour temperature, white tones and colours |
 | `show_effects` | boolean | `true` | The light's effects |
 | `show_members` | boolean | `true` | The lights of a group |
