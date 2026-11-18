@@ -48,7 +48,6 @@ export const setup = (s) => {
   const states = Object.fromEntries(Object.entries(v.lights).map(([id, [state, name, attrs]]) => [id, st(id, state, { friendly_name: name, ...attrs })]));
   states["scene.relax"] = st("scene.relax", "unknown", { friendly_name: "Relax" });
   states["scene.reading"] = st("scene.reading", "unknown", { friendly_name: "Reading" });
-  states["sun.sun"] = st("sun.sun", s.night ? "below_horizon" : "above_horizon", { friendly_name: "Sun" });
   const area = v.area.toLowerCase().replace(/\W/g, "_");
   const entities = Object.fromEntries(Object.keys(v.lights).map((id) => [id, { entity_id: id, area_id: area, platform: "hue" }]));
   return {
@@ -62,7 +61,8 @@ export const setup = (s) => {
       entities,
       states,
     },
-    config: { entity: Object.keys(v.lights)[0], ...v.config, ...s.config },
+    // Night shots force the night picture in both twins: auto follows the theme alone.
+    config: { entity: Object.keys(v.lights)[0], ...(s.night ? { illustration_theme: "night" } : {}), ...v.config, ...s.config },
     open: s.open,
   };
 };
