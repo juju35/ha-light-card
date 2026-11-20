@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.0.2 - 2026-11-20
+
+### Fixes
+- Colour temperature slider from the keyboard: the arrow keys' steps add up and are sent in one call once the keys rest (each key sent its own call, from the same starting value).
+- The frosted status pill gets the `-webkit-backdrop-filter` prefix for older Safari and the iOS companion app.
+
+### Performance
+- The bundle no longer carries the room cards' code it never used: 134.7 KB → 113.4 KB.
+
 ## 1.0.1 - 2026-11-18
 
 ### Fixes
