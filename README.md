@@ -10,6 +10,17 @@
 
 <p align="center"><img src="https://raw.githubusercontent.com/juju35/ha-light-card/main/images/icon.svg" alt="Light Card" width="120"></p>
 
+<p align="center">
+  <a href="https://www.philips-hue.com/"><img src="https://raw.githubusercontent.com/juju35/ha-light-card/main/images/hue.png" alt="Philips Hue" width="48"></a>&nbsp;&nbsp;
+  <a href="https://www.home-assistant.io/integrations/zha/"><img src="https://raw.githubusercontent.com/juju35/ha-light-card/main/images/zha.png" alt="Zigbee Home Automation" width="48"></a>&nbsp;&nbsp;
+  <a href="https://kno.wled.ge/"><img src="https://raw.githubusercontent.com/juju35/ha-light-card/main/images/wled.png" alt="WLED" width="48"></a>&nbsp;&nbsp;
+  <a href="https://www.govee.com/"><img src="https://raw.githubusercontent.com/juju35/ha-light-card/main/images/govee.png" alt="Govee" width="48"></a>&nbsp;&nbsp;
+  <a href="https://csa-iot.org/all-solutions/matter/"><img src="https://raw.githubusercontent.com/juju35/ha-light-card/main/images/matter.png" alt="Matter" width="48"></a>&nbsp;&nbsp;
+  <a href="https://www.tp-link.com/"><img src="https://raw.githubusercontent.com/juju35/ha-light-card/main/images/tplink.png" alt="TP-Link" width="48"></a>&nbsp;&nbsp;
+  <a href="https://www.shelly.com/"><img src="https://raw.githubusercontent.com/juju35/ha-light-card/main/images/shelly.png" alt="Shelly" width="48"></a>&nbsp;&nbsp;
+  <a href="https://www.tuya.com/"><img src="https://raw.githubusercontent.com/juju35/ha-light-card/main/images/tuya.png" alt="Tuya" width="48"></a>
+</p>
+
 An illustrated Lovelace card for Home Assistant's **lights**, drawn as their fixture — a bulb, a filament bulb, a pendant, a cluster of pendants, a chandelier, a ceiling light, a floor lamp, a desk lamp, a garden spotlight, a Christmas tree, a garland, an LED strip — glowing in their own colour and brightness. **The fixture is the slider**: drag it up and down to set the brightness, tap it to switch the light. Below it, the colour temperature, white tones and colours, effects, scenes, and the lights of a group, each with its own tile.
 
 [![Open your Home Assistant instance and open a repository inside the Marketplace.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/marketplace_repository/?owner=juju35&repository=ha-light-card&category=plugin)
@@ -142,25 +153,25 @@ type: custom:light-mini-card
 entity: light.christmas_tree
 ```
 
-| Option | Type | Default | Description |
-|---|---|---|---|
-| `entity` | string | the first light found | A light, a light group, or the switch of a lamp |
-| `entities` | list | | Several lights shown as one (instead of `entity`), each with its tile |
-| `title` | string | the light's name | Card title |
-| `show_title` | boolean | `true` | Show the title |
-| `navigation_path` | string | | A tap on the header opens this dashboard path |
-| `kind` | string | `auto` | The fixture (see the table above); `auto` finds it from the name |
-| `scenes` | list | | Scenes recalled from the card |
-| `colors` | list | six colours | Advanced (YAML): favourite colours, as `#rrggbb` or `[r, g, b]` (up to 8) |
-| `illustration` | boolean | `true` | Both: the illustrated header (`false`: the classic header) |
-| `illustration_theme` | string | `auto` | Both: `auto` (follows the Home Assistant theme: night with a dark theme, day with a light theme), `day` or `night` |
-| `show_colors` | boolean | `true` | Colour temperature, white tones and colours |
-| `show_effects` | boolean | `true` | The light's effects |
-| `show_members` | boolean | `true` | The lights of a group |
-| `animations` | boolean | `true` | Twinkling bulbs and flickering flames |
-| `show_controls` | boolean | `true` | Every control (the fixture then only shows the light) |
-| `zoom` | boolean | `true` | Mini card: the zoom button |
-| `language` | string | Home Assistant's | Advanced: one of the [languages](#translations) |
+| Option | Card | Type | Default | Description |
+|---|---|---|---|---|
+| `entity` | both | string | the first light found | A light, a light group, or the switch of a lamp |
+| `entities` | both | list | | Several lights shown as one (instead of `entity`), each with its tile |
+| `title` | both | string | the light's name | Card title |
+| `show_title` | both | boolean | `true` | Show the title |
+| `navigation_path` | both | string | | A tap on the header opens this dashboard path |
+| `kind` | both | string | `auto` | The fixture (see the table above); `auto` finds it from the name |
+| `scenes` | both | list | | Scenes recalled from the card |
+| `colors` | both | list | six colours | Advanced (YAML): favourite colours, as `#rrggbb` or `[r, g, b]` (up to 8) |
+| `illustration` | both | boolean | `true` | The illustrated header (`false`: the classic header) |
+| `illustration_theme` | both | string | `auto` | `auto` (follows the Home Assistant theme: night with a dark theme, day with a light theme), `day` or `night` |
+| `show_colors` | both | boolean | `true` | Colour temperature, white tones and colours |
+| `show_effects` | both | boolean | `true` | The light's effects |
+| `show_members` | both | boolean | `true` | The lights of a group |
+| `animations` | both | boolean | `true` | Twinkling bulbs and flickering flames |
+| `show_controls` | both | boolean | `true` | Every control (the fixture then only shows the light) |
+| `zoom` | mini | boolean | `true` | The zoom button |
+| `language` | both | string | Home Assistant's | Advanced: one of the [languages](#translations) |
 
 ## Screenshots
 
