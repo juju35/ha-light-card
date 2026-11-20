@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.0.2 - 2026-11-20
+
+### Fixes
+- Colour temperature slider from the keyboard: the arrow keys' steps add up and are sent in one call once the keys rest (each key sent its own call, from the same starting value).
+- The frosted status pill gets the `-webkit-backdrop-filter` prefix for older Safari and the iOS companion app.
+
+### Performance
+- The bundle no longer carries the room cards' code it never used: 134.7 KB → 113.4 KB.
+- The shared translations no longer carry the room cards' labels this card never asks for (sensors, rooms, layouts, sorting) nor the ones its own table already has: 113.4 KB → 112.8 KB, and smaller language files. A test keeps it so.
+
+### Maintenance
+- README: a row of the main brands' logos (Philips Hue, ZHA, WLED, Govee, Matter, TP-Link, Shelly, Tuya), and the options table gets a *Card* column (both / mini) like the other ha-* cards.
+
 ## 1.0.1 - 2026-11-18
 
 ### Fixes
