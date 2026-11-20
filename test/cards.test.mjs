@@ -197,3 +197,16 @@ test("a Christmas tree on a switch: switched by a tap, its bulbs in many colours
   click(card, ".pw");
   assert.deepEqual(json(hass.calls.at(-1)), ["homeassistant", "turn_off", { entity_id: "switch.christmas_tree" }]);
 });
+
+test("colour temperature from the keyboard: the steps add up and are sent once, when the keys rest", async () => {
+  const hass = makeHass();
+  const card = make("light-card", LAMP, hass);
+  const bar = card._nodes[".ct"];
+  bar.querySelector = () => fakeNode();
+  const before = hass.calls.length;
+  for (let i = 0; i < 3; i++) bar.listeners.keydown({ key: "ArrowRight", preventDefault() {} });
+  assert.equal(hass.calls.length, before);
+  await new Promise((r) => setTimeout(r, 450));
+  assert.equal(hass.calls.length, before + 1);
+  assert.deepEqual(json(hass.calls.at(-1)), ["light", "turn_on", { entity_id: "light.floor_lamp", color_temp_kelvin: 3450 }]);
+});

@@ -438,6 +438,8 @@ class LightCard extends RcCard {
     this._fitWidth = undefined;
     if (this._fitFrame) cancelAnimationFrame(this._fitFrame);
     clearTimeout(this._sendTimer);
+    clearTimeout(this._ctTimer);
+    this._asked = this._askedK = null;
   }
 
   // The fixture, big: the brightness slider. Drag it up and down (or ↑ / ↓), tap it to switch the light.
@@ -688,9 +690,15 @@ class LightCard extends RcCard {
       const step = { ArrowRight: 250, ArrowUp: 250, ArrowLeft: -250, ArrowDown: -250 }[ev.key];
       if (!step) return;
       ev.preventDefault();
-      const kk = lcClamp((m.kelvin ?? (m.minK + m.maxK) / 2) + step, m.minK, m.maxK);
-      show(kk);
-      this._call("turn_on", { color_temp_kelvin: Math.round(kk) });
+      // Steps add up until the light answers, and are sent once the keys rest (one call, as for the brightness).
+      const from = this._askedK ?? m.kelvin ?? (m.minK + m.maxK) / 2;
+      this._askedK = lcClamp(from + step, m.minK, m.maxK);
+      show(this._askedK);
+      clearTimeout(this._ctTimer);
+      this._ctTimer = setTimeout(() => {
+        this._call("turn_on", { color_temp_kelvin: Math.round(this._askedK) });
+        this._askedK = null;
+      }, LC_SEND_MS);
     });
   }
 
@@ -821,7 +829,7 @@ class LightCard extends RcCard {
     .banner .room { position: absolute; right: 0; bottom: 10px; width: var(--sw); height: calc(80px * var(--sk, 1)); }
     .banner .ground { position: absolute; left: 0; right: 0; bottom: 0; height: 10px; background: var(--gr); box-shadow: inset 0 2px 0 var(--gl); }
     .banner .zoom { position: absolute; z-index: 2; top: 5px; right: 5px; width: 24px; height: 24px; margin: 0; color: #33506b;
-                    background: rgba(255,255,255,.55); box-shadow: inset 0 0 0 1px rgba(255,255,255,.7); backdrop-filter: blur(4px); }
+                    background: rgba(255,255,255,.55); box-shadow: inset 0 0 0 1px rgba(255,255,255,.7); -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px); }
     .banner.night .zoom { color: #fff; background: rgba(255,255,255,.12); box-shadow: inset 0 0 0 1px rgba(255,255,255,.2); }
     .banner .zoom:hover { background: rgba(255,255,255,.75); color: #33506b; }
     .banner.night .zoom:hover { background: rgba(255,255,255,.22); color: #fff; }
