@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.0.3 - 2026-11-22
+
+### Fixes
+- Light mini card: a tap on the compact view now switches the light (or the plug), a hold opens its dialog, Enter / Space from the keyboard — it could only be switched once zoomed in, so not at all with `zoom: false` (#9). The tone chip and the zoom button keep their own click; with `navigation_path` the header still opens the path and the badge switches the light.
+
 ## 1.0.2 - 2026-11-20
 
 ### Fixes

@@ -907,7 +907,12 @@ rcRegister(
 // ── Mini card ────────────────────────────────────────────────────────────────
 // The light on its banner: the state as the status pill, the brightness and the tone as chips; the zoom button opens
 // the full card in place.
-class LightMiniCard extends rcMini(LightCard, "light-mini-card", ".r { --t: var(--c); } .r.dim { --t: var(--rc-idle); }") {
+class LightMiniCard extends rcMini(
+  LightCard,
+  "light-mini-card",
+  `.r { --t: var(--c); } .r.dim { --t: var(--rc-idle); }
+  .tap { cursor: pointer; touch-action: pan-y; user-select: none; -webkit-user-select: none; -webkit-tap-highlight-color: transparent; }`,
+) {
   getCardSize() {
     return this._zoomed ? super.getCardSize() : 1;
   }
@@ -926,6 +931,7 @@ class LightMiniCard extends rcMini(LightCard, "light-mini-card", ".r { --t: var(
       const root = this.shadowRoot;
       if (c.navigation_path) rcBindNav(root.querySelector(".head"), c.navigation_path);
       for (const el of root.querySelectorAll(".r")) el.addEventListener("click", () => rcMoreInfo(this, el.dataset.id));
+      this._bindToggle(root.querySelector(c.navigation_path ? ".banner .badge" : ".banner"), m);
       this._fitPill();
       return;
     }
@@ -933,6 +939,25 @@ class LightMiniCard extends rcMini(LightCard, "light-mini-card", ".r { --t: var(
     this._paintMini({ level: m.state, icon: this._icon(m), status: "", chips });
     const title = this.shadowRoot.querySelector(".mini .title");
     if (title) title.textContent = m.name;
+    this._bindToggle(this.shadowRoot.querySelector(this._config.navigation_path ? ".mini .badge" : ".mini"), m);
+  }
+
+  // A tap on the compact view switches the light, a hold opens its dialog, like the full card's fixture; its buttons
+  // (the tone chip, the zoom) keep their own click. With `navigation_path` the header opens the path, so only the
+  // badge switches the light (its click does not reach the header).
+  _bindToggle(zone, m) {
+    if (!zone || m.none || m.state === "offline") return;
+    zone.classList.add("tap");
+    zone.setAttribute("role", "switch");
+    zone.setAttribute("tabindex", "0");
+    zone.setAttribute("aria-checked", String(m.state === "on"));
+    zone.setAttribute("aria-label", m.name);
+    if (this._config.navigation_path) zone.addEventListener("click", (ev) => ev.stopPropagation());
+    this._bindPress(zone, {
+      onTap: () => this._call("toggle"),
+      onHold: () => rcMoreInfo(this, m.id),
+      skip: (ev) => ev.target !== zone && !!ev.target.closest?.("button"),
+    });
   }
 }
 
