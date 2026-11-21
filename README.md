@@ -71,7 +71,7 @@ The fixture is found from the name (in any of the card's languages: *Floor lamp*
 
 ### Light mini
 
-`custom:light-mini-card` — The light on the same 90 px illustrated banner (two lines with `illustration: false`): the state as the status pill after the name, then the tone (*2,700 K · Warm white*, the effect) as a chip. The **zoom** button (top right) opens the full card in place, a click anywhere else folds it back (`zoom: false` removes the button).
+`custom:light-mini-card` — The light on the same 90 px illustrated banner (two lines with `illustration: false`): the state as the status pill after the name, then the tone (*2,700 K · Warm white*, the effect) as a chip. **Tap** the banner to switch the light, **hold** it for its dialog (with `navigation_path`, the header opens the path and the badge switches the light). The **zoom** button (top right) opens the full card in place, a click anywhere else folds it back (`zoom: false` removes the button).
 
 ## Supported integrations
 

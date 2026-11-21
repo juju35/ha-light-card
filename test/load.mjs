@@ -28,6 +28,10 @@ export const fakeNode = () => ({
   appendChild(el) {
     this.children.push(el);
   },
+  setAttribute(name, value) {
+    this.attrs ||= {};
+    this.attrs[name] = value;
+  },
 });
 
 export const load = () => {

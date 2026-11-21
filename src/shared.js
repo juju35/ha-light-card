@@ -2290,14 +2290,15 @@ class RcCard extends HTMLElement {
 
   // Tap, hold for more-info, and an optional horizontal drag ({ move(x), end(x), step(delta), flush() }). From the
   // keyboard: Enter / Space tap, Shift+Enter or the context-menu key open the details, ←/→ step the drag by ∓/±10
-  // (a held key at most every RC_REPEAT_MS), and releasing the arrow calls `flush`.
-  _bindPress(el, { onTap, onHold, drag }) {
+  // (a held key at most every RC_REPEAT_MS), and releasing the arrow calls `flush`. `skip(ev)` leaves a press or a key
+  // to an inner control (a button inside a tappable banner, say).
+  _bindPress(el, { onTap, onHold, drag, skip }) {
     let start = null;
     let mode = null; // null | "hold" | "drag"
     let timer = null;
     let lastStep = 0;
     el.addEventListener("pointerdown", (ev) => {
-      if (ev.button !== 0) return;
+      if (ev.button !== 0 || skip?.(ev)) return;
       start = { x: ev.clientX, y: ev.clientY };
       mode = null;
       this._pressing = true;
@@ -2356,6 +2357,7 @@ class RcCard extends HTMLElement {
     el.addEventListener("pointercancel", (ev) => end(ev, true));
     el.addEventListener("contextmenu", (ev) => ev.preventDefault());
     el.addEventListener("keydown", (ev) => {
+      if (skip?.(ev)) return;
       if ((ev.key === "Enter" && ev.shiftKey) || ev.key === "ContextMenu") {
         ev.preventDefault();
         if (!ev.repeat) onHold();

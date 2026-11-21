@@ -147,6 +147,36 @@ test("mini card: the banner with the state and the tone", () => {
   assert.match(html, /<span>2,700 K · Warm white<\/span>/);
 });
 
+test("mini card: a tap switches the light, a hold opens its dialog, its buttons keep their click (#9)", () => {
+  const hass = makeHass();
+  const card = make("light-mini-card", { entity: "light.floor_lamp", zoom: false }, hass);
+  const zone = card._nodes[".banner"];
+  assert.equal(zone.attrs.role, "switch");
+  assert.equal(zone.attrs["aria-checked"], "true");
+  const press = (target) => {
+    zone.listeners.pointerdown({ button: 0, clientX: 0, clientY: 0, target });
+    zone.listeners.pointerup({ clientX: 0, clientY: 0, target });
+  };
+  press(zone);
+  assert.deepEqual(json(hass.calls.at(-1)), ["light", "toggle", { entity_id: "light.floor_lamp" }]);
+  const before = hass.calls.length;
+  press({ closest: (s) => (s === "button" ? {} : null) });
+  assert.equal(hass.calls.length, before);
+  zone.listeners.keydown({ key: "Enter", target: zone, preventDefault() {} });
+  assert.equal(hass.calls.length, before + 1);
+  // A switch too (the tree on a plug), and the classic two-line mini card.
+  const sw = make("light-mini-card", { entity: "switch.reading_lamp", kind: "desk", illustration: false }, hass);
+  sw._nodes[".mini"].listeners.keydown({ key: " ", target: sw._nodes[".mini"], preventDefault() {} });
+  assert.deepEqual(json(hass.calls.at(-1)), ["homeassistant", "toggle", { entity_id: "switch.reading_lamp" }]);
+  // With navigation_path, the header navigates: only the badge switches the light.
+  const nav = make("light-mini-card", { ...LAMP, navigation_path: "/lights" }, hass);
+  assert.equal(nav._nodes[".banner"]?.attrs, undefined);
+  assert.equal(nav._nodes[".banner .badge"].attrs.role, "switch");
+  // Unavailable: nothing to switch.
+  const gone = make("light-mini-card", LAMP, makeHass({ lamp: "unavailable" }));
+  assert.equal(gone._nodes[".banner"]?.attrs, undefined);
+});
+
 test("translations: every language has every key of English, with the same placeholders", () => {
   const LANGS = ["en", "fr", "de", "es", "sr", "sr-Latn", "it", "nl", "pt", "pl", "ro", "da", "sv", "bg", "ru", "uk", "hu", "sk", "cs", "sl", "lv", "el"];
   const vars = (s) => s.match(/\{\w+\}/g)?.sort() ?? [];
