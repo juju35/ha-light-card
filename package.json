@@ -1,6 +1,6 @@
 {
   "name": "ha-light-card",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "An illustrated Lovelace card for Home Assistant's lights: the fixture glowing in its colour and brightness is the slider; colour temperature, colours, effects, scenes and the lights of a group.",
   "repository": {
     "type": "git",
