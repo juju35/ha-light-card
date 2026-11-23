@@ -79,15 +79,15 @@ Any integration with `light` entities works: the card reads their brightness, co
 
 | Integration | Lights |
 |---|---|
-| [Philips Hue](https://www.home-assistant.io/integrations/hue/) (built in) | Hue bulbs, filament bulbs, pendants, strips and outdoor spots |
-| [Zigbee Home Automation](https://www.home-assistant.io/integrations/zha/) (built in) | IKEA, Innr, LIDL and other Zigbee lights |
-| [Zigbee2MQTT](https://www.zigbee2mqtt.io/guide/usage/integrations/home_assistant.html) (MQTT) | The same Zigbee lights |
-| [WLED](https://www.home-assistant.io/integrations/wled/) (built in) | LED strips, garlands and trees, with their effects |
-| [Govee](https://www.home-assistant.io/integrations/govee_light_local/) (built in) | Govee strips and lamps |
-| [Matter](https://www.home-assistant.io/integrations/matter/) (built in) | Matter lights |
-| [TP-Link Smart Home](https://www.home-assistant.io/integrations/tplink/), [Shelly](https://www.home-assistant.io/integrations/shelly/), [Tuya](https://www.home-assistant.io/integrations/tuya/), [Yeelight](https://www.home-assistant.io/integrations/yeelight/), [LIFX](https://www.home-assistant.io/integrations/lifx/), [Nanoleaf](https://www.home-assistant.io/integrations/nanoleaf/) (built in) | Their lights |
-| [Group](https://www.home-assistant.io/integrations/group/) (built in) | Light groups, shown with their lights as tiles |
-| [Switch as X](https://www.home-assistant.io/integrations/switch_as_x/) (built in), or a `switch` | A lamp on a smart plug |
+| <img src="https://raw.githubusercontent.com/juju35/ha-light-card/main/images/hue.png" alt="" width="16"> [Philips Hue](https://www.home-assistant.io/integrations/hue/) (built in) | Hue bulbs, filament bulbs, pendants, strips and outdoor spots |
+| <img src="https://raw.githubusercontent.com/juju35/ha-light-card/main/images/zha.png" alt="" width="16"> [Zigbee Home Automation](https://www.home-assistant.io/integrations/zha/) (built in) | IKEA, Innr, LIDL and other Zigbee lights |
+| <img src="https://raw.githubusercontent.com/juju35/ha-light-card/main/images/zigbee2mqtt.png" alt="" width="16"> [Zigbee2MQTT](https://www.zigbee2mqtt.io/guide/usage/integrations/home_assistant.html) (MQTT) | The same Zigbee lights |
+| <img src="https://raw.githubusercontent.com/juju35/ha-light-card/main/images/wled.png" alt="" width="16"> [WLED](https://www.home-assistant.io/integrations/wled/) (built in) | LED strips, garlands and trees, with their effects |
+| <img src="https://raw.githubusercontent.com/juju35/ha-light-card/main/images/govee.png" alt="" width="16"> [Govee](https://www.home-assistant.io/integrations/govee_light_local/) (built in) | Govee strips and lamps |
+| <img src="https://raw.githubusercontent.com/juju35/ha-light-card/main/images/matter.png" alt="" width="16"> [Matter](https://www.home-assistant.io/integrations/matter/) (built in) | Matter lights |
+| <img src="https://raw.githubusercontent.com/juju35/ha-light-card/main/images/tplink.png" alt="" width="16"> [TP-Link Smart Home](https://www.home-assistant.io/integrations/tplink/), <img src="https://raw.githubusercontent.com/juju35/ha-light-card/main/images/shelly.png" alt="" width="16"> [Shelly](https://www.home-assistant.io/integrations/shelly/), <img src="https://raw.githubusercontent.com/juju35/ha-light-card/main/images/tuya.png" alt="" width="16"> [Tuya](https://www.home-assistant.io/integrations/tuya/), <img src="https://raw.githubusercontent.com/juju35/ha-light-card/main/images/yeelight.png" alt="" width="16"> [Yeelight](https://www.home-assistant.io/integrations/yeelight/), <img src="https://raw.githubusercontent.com/juju35/ha-light-card/main/images/lifx.png" alt="" width="16"> [LIFX](https://www.home-assistant.io/integrations/lifx/), <img src="https://raw.githubusercontent.com/juju35/ha-light-card/main/images/nanoleaf.png" alt="" width="16"> [Nanoleaf](https://www.home-assistant.io/integrations/nanoleaf/) (built in) | Their lights |
+| <img src="https://raw.githubusercontent.com/juju35/ha-light-card/main/images/home_assistant.png" alt="" width="16"> [Group](https://www.home-assistant.io/integrations/group/) (built in) | Light groups, shown with their lights as tiles |
+| <img src="https://raw.githubusercontent.com/juju35/ha-light-card/main/images/home_assistant.png" alt="" width="16"> [Switch as X](https://www.home-assistant.io/integrations/switch_as_x/) (built in), or a `switch` | A lamp on a smart plug |
 
 ## Installation
 
