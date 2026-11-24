@@ -1,12 +1,13 @@
-// The room cards' shared translations (RC_I18N in src/shared.js, which came from ha-room-card) hold only what this card
+// The room cards' shared translations (RC_I18N in the bundled card source (test/source.mjs), which came from ha-room-card) hold only what this card
 // asks for and its own table lacks: the room cards' other labels (sensors, rooms, layouts, sorting…) are left out of
 // the bundle.
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { test } from "node:test";
 import { load } from "./load.mjs";
+import { sources } from "./source.mjs";
 
-const [shared, card] = ["shared", "light-card"].map((f) => readFileSync(new URL(`../src/${f}.js`, import.meta.url), "utf8"));
+const [shared, card] = ["shared", "light-card"].map((f) => (sources[`${f}.js`] ?? readFileSync(new URL(`../src/${f}.js`, import.meta.url), "utf8")));
 
 test("the shared translations hold only what the card asks for and its own table lacks", () => {
   const { RC_I18N, LC_I18N } = load();
