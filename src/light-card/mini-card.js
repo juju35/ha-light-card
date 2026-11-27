@@ -3,6 +3,7 @@
 // the full card in place.
 import { LightCard } from "./card.js";
 import { LC_HELPERS, lcSchema } from "./editor.js";
+import { rcMorph } from "../shared/in-place-redraw.js";
 
 export class LightMiniCard extends rcMini(
   LightCard,
@@ -23,11 +24,12 @@ export class LightMiniCard extends rcMini(
     const status = m.none ? "" : this._status(m);
     if (banner) {
       const c = this._config;
-      this.shadowRoot.innerHTML = `<style>${RC_BASE_STYLES}${this.constructor.styles}</style>
-        <ha-card class="lvl-${m.state} bn">${this._banner(m, rest.length ? `<div class="rs">${rest.map((t) => chip(t, true)).join("")}</div>` : m.sub ? `<div class="subt">${rcEsc(m.sub)}</div>` : "", night, status)}</ha-card>`;
+      rcMorph(this.shadowRoot, `<style>${RC_BASE_STYLES}${this.constructor.styles}</style>
+        <ha-card class="lvl-${m.state} bn">${this._banner(m, rest.length ? `<div class="rs">${rest.map((t) => chip(t, true)).join("")}</div>` : m.sub ? `<div class="subt">${rcEsc(m.sub)}</div>` : "", night, status)}</ha-card>`);
+      this._rewire();
       const root = this.shadowRoot;
-      if (c.navigation_path) rcBindNav(root.querySelector(".head"), c.navigation_path);
-      for (const el of root.querySelectorAll(".r")) el.addEventListener("click", () => rcMoreInfo(this, el.dataset.id));
+      if (c.navigation_path) rcBindNav(root.querySelector(".head"), c.navigation_path, this._on);
+      for (const el of root.querySelectorAll(".r")) el.addEventListener("click", () => rcMoreInfo(this, el.dataset.id), this._on);
       this._bindToggle(root.querySelector(c.navigation_path ? ".banner .badge" : ".banner"), m);
       this._fitPill();
       return;
@@ -49,7 +51,7 @@ export class LightMiniCard extends rcMini(
     zone.setAttribute("tabindex", "0");
     zone.setAttribute("aria-checked", String(m.state === "on"));
     zone.setAttribute("aria-label", m.name);
-    if (this._config.navigation_path) zone.addEventListener("click", (ev) => ev.stopPropagation());
+    if (this._config.navigation_path) zone.addEventListener("click", (ev) => ev.stopPropagation(), this._on);
     this._bindPress(zone, {
       onTap: () => this._call("toggle"),
       onHold: () => rcMoreInfo(this, m.id),
