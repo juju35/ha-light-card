@@ -360,7 +360,7 @@ export class LightCard extends RcCard {
       start = { y: ev.clientY };
       level = null;
       this._pressing = true;
-    });
+    }, this._on);
     fx.addEventListener("pointermove", (ev) => {
       if (!start || !dim) return;
       if (level == null && Math.abs(ev.clientY - start.y) < RC_MOVE_PX) return;
@@ -371,7 +371,7 @@ export class LightCard extends RcCard {
       }
       level = levelAt(ev.clientY);
       this._preview(root, level);
-    });
+    }, this._on);
     const end = (ev, cancelled) => {
       if (!start) return;
       const dragged = level != null;
@@ -384,8 +384,8 @@ export class LightCard extends RcCard {
       this._released(!dragged);
       ev?.stopPropagation?.();
     };
-    fx.addEventListener("pointerup", (ev) => end(ev, false));
-    fx.addEventListener("pointercancel", (ev) => end(ev, true));
+    fx.addEventListener("pointerup", (ev) => end(ev, false), this._on);
+    fx.addEventListener("pointercancel", (ev) => end(ev, true), this._on);
     fx.addEventListener("keydown", (ev) => {
       if (ev.key === "Enter" || ev.key === " ") {
         ev.preventDefault();
@@ -403,7 +403,7 @@ export class LightCard extends RcCard {
         this._call("turn_on", { brightness_pct: Math.round(this._asked * 100) });
         this._asked = null;
       }, LC_SEND_MS);
-    });
+    }, this._on);
   }
 
   _bindCt(root) {
@@ -427,12 +427,12 @@ export class LightCard extends RcCard {
       bar.setPointerCapture?.(ev.pointerId);
       k = kAt(ev.clientX);
       show(k);
-    });
+    }, this._on);
     bar.addEventListener("pointermove", (ev) => {
       if (k == null) return;
       k = kAt(ev.clientX);
       show(k);
-    });
+    }, this._on);
     const end = (cancelled) => {
       if (k == null) return;
       if (!cancelled) this._call("turn_on", { color_temp_kelvin: k });
@@ -441,8 +441,8 @@ export class LightCard extends RcCard {
       this._sig = null;
       this._released(false);
     };
-    bar.addEventListener("pointerup", () => end(false));
-    bar.addEventListener("pointercancel", () => end(true));
+    bar.addEventListener("pointerup", () => end(false), this._on);
+    bar.addEventListener("pointercancel", () => end(true), this._on);
     bar.addEventListener("keydown", (ev) => {
       const step = { ArrowRight: 250, ArrowUp: 250, ArrowLeft: -250, ArrowDown: -250 }[ev.key];
       if (!step) return;
@@ -456,7 +456,7 @@ export class LightCard extends RcCard {
         this._call("turn_on", { color_temp_kelvin: Math.round(this._askedK) });
         this._askedK = null;
       }, LC_SEND_MS);
-    });
+    }, this._on);
   }
 
   _bindAfter(root) {
@@ -466,16 +466,16 @@ export class LightCard extends RcCard {
       root.querySelector(sel)?.addEventListener("click", (ev) => {
         ev.stopPropagation();
         fn(ev);
-      });
-    root.querySelector(".rv")?.addEventListener("click", () => rcMoreInfo(this, m.id));
+      }, this._on);
+    root.querySelector(".rv")?.addEventListener("click", () => rcMoreInfo(this, m.id), this._on);
     on(".pw", () => this._call(m.state === "on" ? "turn_off" : "turn_on"));
     on('[data-k="full"]', () => this._call("turn_on", { brightness_pct: 100 }));
     on('[data-k="night"]', () => this._call("turn_on", { brightness_pct: 10 }));
     on('[data-k="more"]', () => rcMoreInfo(this, m.id));
-    for (const b of root.querySelectorAll(".sw[data-kelvin]")) b.addEventListener("click", () => this._call("turn_on", { color_temp_kelvin: Number(b.dataset.kelvin) }));
-    for (const b of root.querySelectorAll(".sw[data-rgb]")) b.addEventListener("click", () => this._call("turn_on", { rgb_color: lcRgb(b.dataset.rgb) }));
-    for (const b of root.querySelectorAll(".chip[data-effect]")) b.addEventListener("click", () => this._call("turn_on", { effect: b.dataset.effect }));
-    for (const b of root.querySelectorAll(".chip[data-scene]")) b.addEventListener("click", () => rcCall(this._hass, "scene", "turn_on", { entity_id: b.dataset.scene }));
+    for (const b of root.querySelectorAll(".sw[data-kelvin]")) b.addEventListener("click", () => this._call("turn_on", { color_temp_kelvin: Number(b.dataset.kelvin) }), this._on);
+    for (const b of root.querySelectorAll(".sw[data-rgb]")) b.addEventListener("click", () => this._call("turn_on", { rgb_color: lcRgb(b.dataset.rgb) }), this._on);
+    for (const b of root.querySelectorAll(".chip[data-effect]")) b.addEventListener("click", () => this._call("turn_on", { effect: b.dataset.effect }), this._on);
+    for (const b of root.querySelectorAll(".chip[data-scene]")) b.addEventListener("click", () => rcCall(this._hass, "scene", "turn_on", { entity_id: b.dataset.scene }), this._on);
     for (const b of root.querySelectorAll(".mt")) {
       this._bindPress(b, {
         onTap: () => rcCall(this._hass, "homeassistant", "toggle", { entity_id: b.dataset.member }),
