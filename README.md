@@ -104,7 +104,7 @@ Or manually:
 3. Open **Light Card** and click **Install**
 4. Clear your browser cache and refresh
 
-The Marketplace registers the dashboard resource for you.
+The Marketplace registers the dashboard resource for you: `/local/community/ha-light-card/ha-light-card.js`.
 
 ### Manual
 
